@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" href="assets/css/style.css"></link>
+<title>Faça login</title>
+</h:head>
+<h:body>
+  <div class="container">
+    <div class="login">
+      <h1>Login</h1>
+      <form method="post" action="login">
+        <p><p:inputText id="login" type="text" name="login" value="" placeholder="Username or Email"></p:inputText></p>
+        <p><p:inputText id="senha" type="password" name="password" value="" placeholder="Password"></p:inputText></p>
+        <p class="remember_me">
+          <label>
+            <a href="/Integrador/register">Registre-se</a>
+          </label>
+        </p>
+        <p class="submit"><p:inputText type="submit" name="commit" value="Login"></p:inputText></p>
+      </form>
+      <p style="color:red">Mensagem: ${mensagem}</p>
+    </div>
+  </div>
+
+</h:body>
+</html>
