@@ -6,26 +6,48 @@
 
 
 <h:head>
-
-	<!--<link type="text/css" rel="stylesheet"
-		href="/Integrador/javax.faces.resource/theme.css.xhtml?ln=primefaces-aristo" />
-	<link type="text/css" rel="stylesheet"
-		href="/Integrador/javax.faces.resource/components.css.xhtml?ln=primefaces&amp;v=6.2" />
-	<script type="text/javascript"
-		src="/Integrador/javax.faces.resource/jquery/jquery.js.xhtml?ln=primefaces&amp;v=6.2"></script>
-	<script type="text/javascript"
-		src="/Integrador/javax.faces.resource/jquery/jquery-plugins.js.xhtml?ln=primefaces&amp;v=6.2"></script>
-	<script type="text/javascript"
-		src="/Integrador/javax.faces.resource/core.js.xhtml?ln=primefaces&amp;v=6.2"></script>
-	<script type="text/javascript"
-		src="/Integrador/javax.faces.resource/components.js.xhtml?ln=primefaces&amp;v=6.2"></script>
-	<script type="text/javascript"
-		src="/Integrador/javax.faces.resource/jsf.js.xhtml?ln=javax.faces"></script>
 	<script type="text/javascript">
-		if (window.PrimeFaces) {
-			PrimeFaces.settings.locale = 'en_US';
-		}
-	</script>-->
+    PrimeFaces.locales['es'] = {
+        closeText: 'Cerrar',
+        prevText: 'Anterior',
+        nextText: 'Siguiente',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+        dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+        weekHeader: 'Semana',
+        firstDayOfWeek: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        timeOnlyTitle: 'Sólo hora',
+        timeText: 'Tiempo',
+        hourText: 'Hora',
+        minuteText: 'Minuto',
+        secondText: 'Segundo',
+        currentText: 'Fecha actual',
+        ampm: false,
+        month: 'Mes',
+        week: 'Semana',
+        day: 'Día',
+        allDayText: 'Todo el día'
+    };
+</script>
+
+	<script type="text/javascript">
+    //<![CDATA[
+    function dateTemplateFunc(date) {
+        return '<span style="background-color:' + ((date.day < 21 && date.day > 10) ? '#81C784' : 'inherit') + ';border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">' + date.day + '</span>';
+    }
+    //]]>
+</script>
+
+	<style type="text/css">
+.value {
+	font-weight: bold;
+}
+</style>
 
 	<meta charset="utf-8"></meta>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
@@ -36,19 +58,20 @@
 	<title>Cadastro</title>
 
 	<!-- Bootstrap core CSS-->
-	<link href="assets/vendor/bootstrap/css/bootstrap.min.css"
+	<link href="../assets/vendor/bootstrap/css/bootstrap.min.css"
 		rel="stylesheet"></link>
 
 	<!-- Custom fonts for this template-->
-	<link href="assets/vendor/fontawesome-free/css/all.min.css"
+	<link href="../assets/vendor/fontawesome-free/css/all.min.css"
 		rel="stylesheet" type="text/css"></link>
 
 	<!-- Custom styles for this template-->
-	<link href="assets/css/sb-admin.css" rel="stylesheet"></link>
+	<link href="../assets/css/sb-admin.css" rel="stylesheet"></link>
 
 </h:head>
 
 <h:body id="page-top">
+
 
 	<nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
@@ -124,8 +147,8 @@
 		<!-- Sidebar -->
 		<ul class="sidebar navbar-nav">
 			<li class="nav-item active"><a class="nav-link"
-				href="/Integrador/dashboard"> <i class="fas fa-fw fa-tachometer-alt"></i>
-					<span>Dashboard</span>
+				href="/Integrador/dashboard"> <i
+					class="fas fa-fw fa-tachometer-alt"></i> <span>Dashboard</span>
 			</a></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="pagesDropdown"
@@ -134,7 +157,8 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<!-- <h6 class="dropdown-header">Login Screens:</h6> -->
-					<a class="dropdown-item" href="/Integrador/cadastro-cliente">Cadastrar Cliente</a> 
+					<a class="dropdown-item" href="/Integrador/cadastro-cliente">Cadastrar
+						Cliente</a>
 				</div></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="pagesDropdown"
@@ -142,7 +166,8 @@
 				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>Veiculos</span>
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-					<a class="dropdown-item" href="/Integrador/cadastro-veiculo">Cadastrar Veículos</a> 
+					<a class="dropdown-item" href="/Integrador/cadastro-veiculo">Cadastrar
+						Veículos</a>
 				</div></li>
 			<li class="nav-item dropdown"><a
 				class="nav-link dropdown-toggle" href="#" id="pagesDropdown"
@@ -150,30 +175,34 @@
 				aria-expanded="false"> <i class="fas fa-fw fa-folder"></i> <span>Pedidos</span>
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
-					<a class="dropdown-item" href="/Integrador/cadastro-pedido">Cadastro Pedido</a>
+					<a class="dropdown-item" href="/Integrador/cadastro-pedido">Cadastro
+						Pedido</a>
 				</div></li>
 			<li class="nav-item dropdown"><a class="nav-link" href="#">
 					<i class="fas fa-fw fa-folder"></i> <span>Manutenção</span>
 			</a></li>
 		</ul>
 
-		<div id="content-wrapper">
-			<div class="container-fluid">
-				<ui:include src="#{requestScope.views}"></ui:include>
-			</div>
-			<!-- /.container-fluid -->
 
-			<!-- Sticky Footer -->
-			<footer class="sticky-footer">
-				<div class="container my-auto">
-					<div class="copyright text-center my-auto">
-						<span>Copyright © Your Website 2018</span>
-					</div>
+		<ui:insert name="conteudo">
+			<div id="content-wrapper">
+				<div class="container-fluid">
+					<ui:include src="#{requestScope.views}"></ui:include>
 				</div>
-			</footer>
+				<!-- /.container-fluid -->
 
-		</div>
-		<!-- /.content-wrapper -->
+				<!-- Sticky Footer -->
+				<footer class="sticky-footer">
+					<div class="container my-auto">
+						<div class="copyright text-center my-auto">
+							<span>Copyright © Your Website 2018</span>
+						</div>
+					</div>
+				</footer>
+
+			</div>
+			<!-- /.content-wrapper -->
+		</ui:insert>
 
 	</div>
 	<!-- /#wrapper -->
@@ -205,10 +234,10 @@
 			</div>
 		</div>
 	</div>
-	<script src="assets/vendor/jquery/jquery.min.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/sb-admin.min.js"></script>
+	<script src="../assets/vendor/jquery/jquery.min.js"></script>
+	<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="../assets/js/sb-admin.min.js"></script>
 	<!-- script local -->
-	<script src="assets/js/script.js"></script>
-</h:body> 
+	<script src="../assets/js/script.js"></script>
+</h:body>
 </html>

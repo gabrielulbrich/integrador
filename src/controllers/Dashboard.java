@@ -20,9 +20,9 @@ public class Dashboard extends HttpServlet {
     	boolean logado = Boolean.valueOf(String.valueOf(session.getAttribute("logado")));
     	if(logado == true) {
 	    	request.setAttribute("views", "dashboard.xhtml");
-	    	request.getRequestDispatcher("views/layout.xhtml").forward(request, response);
+	    	request.getRequestDispatcher("/views/layout.xhtml").forward(request, response);
     	}else {
-    		request.getRequestDispatcher("views/login.xhtml").forward(request, response);
+    		response.sendRedirect("/Integrador/login");
     	}
     }
 }

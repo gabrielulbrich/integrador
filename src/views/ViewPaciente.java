@@ -7,7 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import controllers.CadastradosBean;
+import controllers.Paciente;
 import models.PacienteDAO;
 
 @ManagedBean

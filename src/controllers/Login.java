@@ -23,7 +23,7 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Preprocess request: we actually don't need to do any business stuff, so just display JSP.
-        request.getRequestDispatcher("views/login.xhtml").forward(request, response);
+        request.getRequestDispatcher("/views/login.xhtml").forward(request, response);
         //login.Salvar();
     }
 
@@ -38,7 +38,7 @@ public class Login extends HttpServlet {
     		if(verificaSenha(senha)) {
     			session.setAttribute("nomeUsuario", model.getNome());
     			session.setAttribute("logado", true);
-    			response.sendRedirect("/Integrador/dashboard");
+    			response.sendRedirect("/integrador/dashboard");
     		}else {
     			invalidaSessao(request, response);
     		}
