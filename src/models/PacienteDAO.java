@@ -14,10 +14,10 @@ public class PacienteDAO {
 	ConexaoBD conexao = new ConexaoBD();
 	
 
-	public boolean Inserir(NewRegisterModel mode) {
+	public boolean Inserir(Paciente_model mode) {
 		conexao.conexao();
 		try {	
-			PreparedStatement pst = conexao.con.prepareStatement("INSERT INTO paciente (nome, cpf, idade, sexo, endereco, telefone, datacadastro, horacadastro, prioridade) VALUES (?,?,?,?,?,?,?,?,?);");
+			PreparedStatement pst = conexao.con.prepareStatement("INSERT INTO paciente (nome, cpf, idade, sexo, endereco, telefone, datacadastro, horacadastro, prioridade) VALUES (?,?,?,?,?,?,to_date(?, 'DD-MM-YYYY'),?,?);");
 			pst.setString(1, mode.getNome());
 			pst.setString(2, mode.getCpf());
 			pst.setString(3, mode.getIdade());
@@ -38,14 +38,14 @@ public class PacienteDAO {
 		return false;
 	}
 	
-	public List<NewRegisterModel> Buscar(){
+	public List<Paciente_model> Buscar(){
 		conexao.conexao();
 		try {
 			PreparedStatement pst = conexao.con.prepareStatement("SELECT * FROM paciente ORDER BY prioridade ASC;");
 			ResultSet rs = pst.executeQuery();
-			List<NewRegisterModel> models = new ArrayList<>();
+			List<Paciente_model> models = new ArrayList<>();
 			while(rs.next()) {
-				NewRegisterModel model = new NewRegisterModel();
+				Paciente_model model = new Paciente_model();
 				model.setCod_paciente(rs.getInt("cod_paciente"));
 				model.setNome(rs.getString("nome"));
 				model.setCpf(rs.getString("cpf"));
@@ -68,7 +68,7 @@ public class PacienteDAO {
 		    return null;
 		}
 	}
-	public boolean Mudar(NewRegisterModel mode) {
+	public boolean Mudar(Paciente_model mode) {
 		conexao.conexao();
 		try {	
 			PreparedStatement pst = conexao.con.prepareStatement("UPDATE paciente SET nome = ?, cpf = ?, idade = ?, sexo = ?, endereco = ?, telefone = ?, datacadastro = ?, horacadastro = ?, prioridade = ? where cod_paciente = ?;");
@@ -95,7 +95,7 @@ public class PacienteDAO {
 	
 	public static void deletarPaciente(Integer cod_paciente) {
 		Statement stm;
-		List<NewRegisterModel> models = new ArrayList<>();  
+		List<Paciente_model> models = new ArrayList<>();  
 	    ConexaoBD conexao = new ConexaoBD();
 	    conexao.conexao();
 	    try {	

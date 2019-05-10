@@ -38,10 +38,10 @@
 					<p:inputText value="#{paciente.model.telefone}"></p:inputText>
 
 					<p:outputLabel value="Data de cadastro:" />
-					<p:inputText value="#{paciente.model.datacadastro}"></p:inputText>
+        			<p:datePicker id="popup" value="#{model.datacadastro}" pattern="dd-MM-yyyy"/>
 
 					<p:outputLabel value="Hora de cadastro:" />
-					<p:inputText value="#{paciente.model.horacadastro}"></p:inputText>
+					<p:datePicker id="timeonly" value="#{model.horacadastro}" timeOnly="true" pattern="HH:mm:ss"/>
 
 					<p:outputLabel value="Prioridade de atendimento:" />
 					<p:inputText value="#{paciente.model.prioridade}"></p:inputText>
@@ -79,6 +79,8 @@
 
 			</p:fieldset>
 		</h:form>
+		
+		
 
 
 	</ui:define>

@@ -1,6 +1,6 @@
 package models;
 
-public class NewRegisterModel {
+public class Paciente_model {
 	
 	private int cod_paciente;
 	private String nome;

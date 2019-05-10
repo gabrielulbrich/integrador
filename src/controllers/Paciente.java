@@ -16,14 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import models.ConexaoBD;
-import models.NewRegisterModel;
+import models.Paciente_model;
 import models.PacienteDAO;
 
 @ManagedBean
 @SessionScoped
 public class Paciente extends HttpServlet{
-	private NewRegisterModel model = new NewRegisterModel();
-	private List<NewRegisterModel> models = new ArrayList<>();
+	private Paciente_model model = new Paciente_model();
+	private List<Paciente_model> models = new ArrayList<>();
 	private PacienteDAO pac = new PacienteDAO();
 	
 
@@ -44,33 +44,33 @@ public class Paciente extends HttpServlet{
 	public void adicionar() {
 		models.add(model);
 		pac.Inserir(model);
-		model = new NewRegisterModel();
+		model = new Paciente_model();
 	}
 	
 	public void Listar() {
 		models = pac.Buscar();
 	}
 
-	public NewRegisterModel getModel() {
+	public Paciente_model getModel() {
 		return model;
 	}
 
 	public void Editar() {
 		models.add(model);
 		pac.Mudar(model);
-		model = new NewRegisterModel();
+		model = new Paciente_model();
 		
 	}
 	
-	public void setModel(NewRegisterModel model) {
+	public void setModel(Paciente_model model) {
 		this.model = model;
 	}
 
-	public List<NewRegisterModel> getModels() {
+	public List<Paciente_model> getModels() {
 		return models;
 	}
 
-	public void setModels(List<NewRegisterModel> models) {
+	public void setModels(List<Paciente_model> models) {
 		this.models = models;
 	}
 	
