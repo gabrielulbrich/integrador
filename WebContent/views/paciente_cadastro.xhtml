@@ -28,20 +28,26 @@
 					<p:outputLabel value="Idade:" />
 					<p:inputText value="#{paciente.model.idade}"></p:inputText>
 
-					<p:outputLabel value="Sexo:" />
-					<p:inputText value="#{paciente.model.sexo}"></p:inputText>
+					<p:outputLabel for="sexo" value="Sexo:" />
+					<p:selectOneMenu id="sexo" value="#{paciente.model.sexo}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+						<f:selectItem itemLabel="Feminino" itemValue="Feminino" />
+					</p:selectOneMenu>
 
 					<p:outputLabel value="Endereço:" />
 					<p:inputText value="#{paciente.model.endereco}"></p:inputText>
 
-					<p:outputLabel value="Telefone:" />
-					<p:inputText value="#{paciente.model.telefone}"></p:inputText>
+					<p:outputLabel for="telefone" value="Telefone:" />
+					<p:inputMask id="telefone" value="#{paciente.model.telefone}" mask="(99) 99999-9999"/>
 
-					<p:outputLabel value="Data de cadastro:" />
-        			<p:datePicker id="popup" value="#{model.datacadastro}" pattern="dd-MM-yyyy"/>
+					<p:outputLabel for="date" value="Data de cadastro:" />
+					<p:datePicker id="date" value="#{paciente.model.datacadastro}"
+						pattern="dd-MM-yyyy"/>
 
 					<p:outputLabel value="Hora de cadastro:" />
-					<p:datePicker id="timeonly" value="#{model.horacadastro}" timeOnly="true" pattern="HH:mm:ss"/>
+					<p:datePicker id="timeonly" value="#{paciente.model.horacadastro}"
+						timeOnly="true" pattern="HH:mm:ss" />
 
 					<p:outputLabel value="Prioridade de atendimento:" />
 					<p:inputText value="#{paciente.model.prioridade}"></p:inputText>
@@ -79,8 +85,8 @@
 
 			</p:fieldset>
 		</h:form>
-		
-		
+
+
 
 
 	</ui:define>
