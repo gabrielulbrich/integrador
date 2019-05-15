@@ -17,7 +17,9 @@ public class PacienteDAO {
 	public boolean Inserir(Paciente_model mode) {
 		conexao.conexao();
 		try {	
-			PreparedStatement pst = conexao.con.prepareStatement("INSERT INTO paciente (nome, cpf, idade, sexo, endereco, telefone, datacadastro, horacadastro, prioridade) VALUES (?,?,?,?,?,?,to_date(?, 'DD-MM-YYYY'),?,?);");
+			PreparedStatement pst = conexao.con.prepareStatement("INSERT INTO paciente "
+					+ "(nome, cpf, idade, sexo, endereco, telefone, datacadastro, horacadastro, prioridade) "
+					+ "VALUES (?,?,?,?,?,?,to_date(?, 'DD-MM-YYYY'),?,?);");
 			pst.setString(1, mode.getNome());
 			pst.setString(2, mode.getCpf());
 			pst.setString(3, mode.getIdade());
