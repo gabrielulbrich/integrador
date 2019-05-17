@@ -42,12 +42,10 @@
 					<p:inputMask id="telefone" value="#{paciente.model.telefone}" mask="(99) 99999-9999"/>
 
 					<p:outputLabel for="date" value="Data de cadastro:" />
-					<p:datePicker id="date" value="#{paciente.model.datacadastro}"
-						pattern="dd-MM-yyyy"/>
+					<p:inputMask id="date" value="#{paciente.model.datacadastro}" mask="99/99/9999"/>
 
-					<p:outputLabel value="Hora de cadastro:" />
-					<p:datePicker id="timeonly" value="#{paciente.model.horacadastro}"
-						timeOnly="true" pattern="HH:mm:ss" />
+					<p:outputLabel for="hora" value="Hora de cadastro:" />
+					<p:inputMask id="hora" value="#{paciente.model.horacadastro}" mask="99:99:99"/>
 
 					<p:outputLabel value="Prioridade de atendimento:" />
 					<p:inputText value="#{paciente.model.prioridade}"></p:inputText>

@@ -1,5 +1,9 @@
 package models;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Paciente_model {
 	
 	private int cod_paciente;
@@ -9,8 +13,8 @@ public class Paciente_model {
 	private String sexo;
 	private String endereco;
 	private String telefone;
-	private String datacadastro;
 	private String horacadastro;
+	private String datacadastro;	
 	private String prioridade;
 		
 	public int getCod_paciente() {
@@ -68,6 +72,18 @@ public class Paciente_model {
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
+	
+	public String getHoracadastro() {
+		return horacadastro;
+	}
+
+	public void setHoracadastro(String horacadastro) {
+//		horacadastro = horacadastro+" "+getHoracadastro();
+//		java.sql.Timestamp timestamp = java.sql.Timestamp.valueOf(horacadastro) ;
+//		this.horacadastro = timestamp.toInstant().toString();
+//		System.out.println(this.horacadastro);
+		this.horacadastro = horacadastro;
+	}
 
 	public String getDatacadastro() {
 		return datacadastro;
@@ -75,14 +91,6 @@ public class Paciente_model {
 
 	public void setDatacadastro(String datacadastro) {
 		this.datacadastro = datacadastro;
-	}
-
-	public String getHoracadastro() {
-		return horacadastro;
-	}
-
-	public void setHoracadastro(String horacadastro) {
-		this.horacadastro = horacadastro;
 	}
 
 	public String getPrioridade() {
