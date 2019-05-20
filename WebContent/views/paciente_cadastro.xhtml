@@ -22,8 +22,8 @@
 					<p:outputLabel value="Nome:" />
 					<p:inputText value="#{paciente.model.nome}"></p:inputText>
 
-					<p:outputLabel value="CPF:" />
-					<p:inputText value="#{paciente.model.cpf}"></p:inputText>
+					<p:outputLabel for="cpf" value="CPF:" />
+					<p:inputMask id="cpf" value="#{paciente.model.cpf}" mask="999.999.999-99"/>
 
 					<p:outputLabel value="Idade:" />
 					<p:inputText value="#{paciente.model.idade}"></p:inputText>
@@ -42,7 +42,7 @@
 					<p:inputMask id="telefone" value="#{paciente.model.telefone}" mask="(99) 99999-9999"/>
 
 					<p:outputLabel for="date" value="Data de cadastro:" />
-					<p:inputMask id="date" value="#{paciente.model.datacadastro}" mask="99/99/9999"/>
+					<p:inputMask id="date" value="#{paciente.model.datacadastro}" mask="9999-99-99"/>
 
 					<p:outputLabel for="hora" value="Hora de cadastro:" />
 					<p:inputMask id="hora" value="#{paciente.model.horacadastro}" mask="99:99:99"/>

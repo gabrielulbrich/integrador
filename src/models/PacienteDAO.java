@@ -21,22 +21,18 @@ public class PacienteDAO {
 		conexao.conexao();
 
 		String tempo = model.getDatacadastro() +" "+ model.getHoracadastro();		
-		System.out.println(tempo);
-
-		long ts = 0;
-		
-		try {			
-			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");    			
-			ts = dateFormat.parse(tempo).getTime()/1000;			
-		} catch(ParseException e) { //this generic but you can control another types of exception
-		    System.out.println("Erro na data");
-		}		
-		
-		return true;
+//		long timestamp = 0;
+//		
+//		try {			
+//			SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");    			
+//			timestamp = dateFormat.parse(tempo).getTime()/1000;			
+//		} catch(ParseException e) { //this generic but you can control another types of exception
+//		    System.out.println("Erro na data");
+//		}
 		
 		try {
 			PreparedStatement pst = conexao.con.prepareStatement(
-					"INSERT INTO paciente (nome, cpf, idade, sexo, endereco, telefone, datacadastro, horacadastro, prioridade) VALUES (?,?,?,?,?,?,to_date(?, 'DD-MM-YYYY'),?,?);");
+					"INSERT INTO paciente (nome, cpf, idade, sexo, endereco, telefone, datacadastro, prioridade) VALUES (?,?,?,?,?,?,TIMESTAMP (?, ? ),?);");
 			pst.setString(1, model.getNome());
 			pst.setString(2, model.getCpf());
 			pst.setString(3, model.getIdade());
@@ -88,7 +84,7 @@ public class PacienteDAO {
 				model.setEndereco(rs.getString("endereco"));
 				model.setTelefone(rs.getString("telefone"));
 				model.setDatacadastro(rs.getString("datacadastro"));
-				model.setHoracadastro(rs.getString("horacadastro"));
+//				model.setHoracadastro(rs.getString("horacadastro"));
 				model.setPrioridade(rs.getString("prioridade"));
 				models.add(model);
 
@@ -97,6 +93,7 @@ public class PacienteDAO {
 			return models;
 
 		} catch (Exception e) {
+			conexao.desconecta();
 			System.out.println("Erro de SQL: " + e);
 			e.printStackTrace();
 			return null;
