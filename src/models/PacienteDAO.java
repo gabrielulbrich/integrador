@@ -15,10 +15,11 @@ import models.ConexaoBD;
 
 public class PacienteDAO {
 
+	String categoria = null;
+	int prioridade = 0;
 	ConexaoBD conexao = new ConexaoBD();
 
-	public boolean Inserir(Paciente_model model){
-		conexao.conexao();
+	public boolean inserir(Paciente_model model){		
 
 		String tempo = model.getDatacadastro() +" "+ model.getHoracadastro();		
 //		long timestamp = 0;
@@ -29,10 +30,29 @@ public class PacienteDAO {
 //		} catch(ParseException e) { //this generic but you can control another types of exception
 //		    System.out.println("Erro na data");
 //		}
+		prioridade = Integer.parseInt(model.getPrioridade());
+		System.out.println(prioridade);
+		if (prioridade == 100) {
+			categoria = "b";
+		}else if(prioridade == 200) {
+			categoria = "m";
+		}else if(prioridade == 300) {
+			categoria = "a";
+		}else if(prioridade == 400) {
+			categoria = "e";
+		}else {
+			categoria = "0";
+		}
+		System.out.println(categoria);
 		
+		prioridade = selectPrioridade(categoria);
+		if (prioridade == 0) {
+			prioridade = Integer.parseInt(model.getPrioridade());
+		}
+		conexao.conexao();
 		try {
 			PreparedStatement pst = conexao.con.prepareStatement(
-					"INSERT INTO paciente (nome, cpf, idade, sexo, endereco, telefone, datacadastro, prioridade) VALUES (?,?,?,?,?,?,TIMESTAMP (?, ? ),?);");
+					"INSERT INTO paciente (nome, cpf, idade, sexo, endereco, telefone, datacadastro, prioridade, categoria) VALUES (?,?,?,?,?,?,TIMESTAMP(?, ? ),?, ?);");
 			pst.setString(1, model.getNome());
 			pst.setString(2, model.getCpf());
 			pst.setString(3, model.getIdade());
@@ -41,32 +61,37 @@ public class PacienteDAO {
 			pst.setString(6, model.getTelefone());
 			pst.setString(7, model.getDatacadastro());
 			pst.setString(8, model.getHoracadastro());
-			pst.setString(9, model.getPrioridade());
+			pst.setInt(9, prioridade--);
+			pst.setString(10, categoria);
 			pst.execute();
 			conexao.desconecta();
 			return true;
 		} catch (SQLException e) {
 			System.out.println("Erro de SQL: " + e);
+			conexao.desconecta();			
 			e.printStackTrace();
+			return false;
 		}
-		conexao.desconecta();
-		return false;
 	}
 
-//	public static String time(String data, String hora) throws ParseException {
-//		Paciente_model model = new Paciente_model();
-//		String date = model.getDatacadastro() + " " + model.getHoracadastro();
-//		Timestamp timestamp = null;
-//		try {
-//			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
-//			Date parsedDate = dateFormat.parse(date);
-//			timestamp = new java.sql.Timestamp(parsedDate.getTime());
-//		} catch (Exception e) { // this generic but you can control another types of exception
-//			// look the origin of excption
-//		}
-//		System.out.println(timestamp.toInstant().toString());
-//		return timestamp.toInstant().toString();
-//	}
+	public int selectPrioridade(String categoria) {
+		conexao.conexao();
+		try {
+			PreparedStatement pst = conexao.con.prepareStatement("SELECT MIN(prioridade) as prioridade FROM paciente where categoria='"+categoria+"';");
+			ResultSet rs = pst.executeQuery();
+			if (rs.next()) {
+				prioridade = (Integer) rs.getObject("prioridade");
+			}
+			conexao.desconecta();
+			return prioridade;
+
+		} catch (Exception e) {
+			conexao.desconecta();
+			System.out.println("Erro de SQL: " + e);
+			e.printStackTrace();
+			return 0;
+		}
+	}
 
 	public List<Paciente_model> Buscar() {
 		conexao.conexao();

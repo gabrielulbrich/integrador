@@ -23,7 +23,7 @@ import models.PacienteDAO;
 @SessionScoped
 public class Paciente extends HttpServlet{
 	private Paciente_model model = new Paciente_model();
-	private List<Paciente_model> models = new ArrayList<>();
+	private List<Paciente_model> lista = new ArrayList<>();
 	private PacienteDAO pac = new PacienteDAO();
 	
 
@@ -42,13 +42,13 @@ public class Paciente extends HttpServlet{
     
 	
 	public void adicionar() {
-		models.add(model);
-		pac.Inserir(model);
+		lista.add(model);
+		pac.inserir(model);
 		model = new Paciente_model();
 	}
 	
 	public void Listar() {
-		models = pac.Buscar();
+		lista = pac.Buscar();
 	}
 
 	public Paciente_model getModel() {
@@ -56,7 +56,7 @@ public class Paciente extends HttpServlet{
 	}
 
 	public void Editar() {
-		models.add(model);
+		lista.add(model);
 		pac.Mudar(model);
 		model = new Paciente_model();
 		
@@ -66,12 +66,12 @@ public class Paciente extends HttpServlet{
 		this.model = model;
 	}
 
-	public List<Paciente_model> getModels() {
-		return models;
+	public List<Paciente_model> getlista() {
+		return lista;
 	}
 
-	public void setModels(List<Paciente_model> models) {
-		this.models = models;
+	public void setlista(List<Paciente_model> lista) {
+		this.lista = lista;
 	}
 	
 	

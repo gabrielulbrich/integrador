@@ -9,84 +9,61 @@
 <ui:composition template="layout.xhtml">
 	<ui:define name="conteudo">
 		<h:form id="frm">
-			<p:toolbar>
-				<p:toolbarGroup>
-					<p:commandButton value="Cadastrar" action="#{paciente.adicionar()}"
-						update="@form" />
-					<p:commandButton value="Ver os pacientes cadastrados"
-						action="lista-cadastrados" />
-				</p:toolbarGroup>
-			</p:toolbar>
-			<p:fieldset legend="Objetos">
-				<p:panelGrid columns="2">
-					<p:outputLabel value="Nome:" />
-					<p:inputText value="#{paciente.model.nome}"></p:inputText>
+			<p:panelGrid columns="2" cellpadding="5">
+				<p:outputLabel for="nome" value="Nome:" />
+				<p:inputText id="nome" value="#{paciente.model.nome}"
+					required="true"></p:inputText>
 
-					<p:outputLabel for="cpf" value="CPF:" />
-					<p:inputMask id="cpf" value="#{paciente.model.cpf}" mask="999.999.999-99"/>
+				<p:outputLabel for="cpf" value="CPF:" />
+				<p:inputMask id="cpf" value="#{paciente.model.cpf}"
+					mask="999.999.999-99" required="true" />
 
-					<p:outputLabel value="Idade:" />
-					<p:inputText value="#{paciente.model.idade}"></p:inputText>
+				<p:outputLabel for="idade" value="Idade:" />
+				<p:inputText id="idade" value="#{paciente.model.idade}"
+					required="true"></p:inputText>
 
-					<p:outputLabel for="sexo" value="Sexo:" />
-					<p:selectOneMenu id="sexo" value="#{paciente.model.sexo}">
-						<f:selectItem itemLabel="Selecione" itemValue="" />
-						<f:selectItem itemLabel="Masculino" itemValue="Masculino" />
-						<f:selectItem itemLabel="Feminino" itemValue="Feminino" />
-					</p:selectOneMenu>
+				<p:outputLabel for="sexo" value="Sexo:" />
+				<p:selectOneMenu id="sexo" value="#{paciente.model.sexo}"
+					required="true">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+					<f:selectItem itemLabel="Feminino" itemValue="Feminino" />
+				</p:selectOneMenu>
 
-					<p:outputLabel value="Endereço:" />
-					<p:inputText value="#{paciente.model.endereco}"></p:inputText>
+				<p:outputLabel for="endereco" value="Endereço:" />
+				<p:inputText id="endereco" value="#{paciente.model.endereco}"
+					required="true"></p:inputText>
 
-					<p:outputLabel for="telefone" value="Telefone:" />
-					<p:inputMask id="telefone" value="#{paciente.model.telefone}" mask="(99) 99999-9999"/>
+				<p:outputLabel for="telefone" value="Telefone:" />
+				<p:inputMask id="telefone" value="#{paciente.model.telefone}"
+					mask="(99) 99999-9999" required="true" />
 
-					<p:outputLabel for="date" value="Data de cadastro:" />
-					<p:inputMask id="date" value="#{paciente.model.datacadastro}" mask="9999-99-99"/>
+				<p:outputLabel for="date" value="Data de cadastro:" />
+				<p:inputMask id="date" value="#{paciente.model.datacadastro}"
+					mask="9999-99-99" required="true">
+				</p:inputMask>
 
-					<p:outputLabel for="hora" value="Hora de cadastro:" />
-					<p:inputMask id="hora" value="#{paciente.model.horacadastro}" mask="99:99:99"/>
+				<p:outputLabel for="hora" value="Hora de cadastro:" />
+				<p:inputMask id="hora" value="#{paciente.model.horacadastro}"
+					mask="99:99:99" required="true" />
 
-					<p:outputLabel value="Prioridade de atendimento:" />
-					<p:inputText value="#{paciente.model.prioridade}"></p:inputText>
+				<p:outputLabel for="prioridade" value="Prioridade de atendimento:" />
+				<p:selectOneMenu id="prioridade"
+					value="#{paciente.model.prioridade}" required="true">
+					<f:selectItem itemLabel="Selecione" itemValue="" />
+					<f:selectItem itemLabel="Baixa" itemValue="100" />
+					<f:selectItem itemLabel="Média" itemValue="200" />
+					<f:selectItem itemLabel="Alta" itemValue="300" />
+					<f:selectItem itemLabel="Emergência" itemValue="400" />
+				</p:selectOneMenu>
 
-				</p:panelGrid>
-				<p:dataTable value="#{paciente.models}" var="model">
-					<p:column headerText="Nome">
-						<h:outputText value="#{model.nome}"></h:outputText>
-					</p:column>
-					<p:column headerText="CPF">
-						<h:outputText value="#{model.cpf}"></h:outputText>
-					</p:column>
-					<p:column headerText="Idade">
-						<h:outputText value="#{model.idade}"></h:outputText>
-					</p:column>
-					<p:column headerText="Sexo">
-						<h:outputText value="#{model.sexo}"></h:outputText>
-					</p:column>
-					<p:column headerText="Endereço">
-						<h:outputText value="#{model.endereco}"></h:outputText>
-					</p:column>
-					<p:column headerText="Telefone">
-						<h:outputText value="#{model.telefone}"></h:outputText>
-					</p:column>
-					<p:column headerText="Hora cadastro">
-						<h:outputText value="#{model.horacadastro}"></h:outputText>
-					</p:column>
-					<p:column headerText="Data cadastro">
-						<h:outputText value="#{model.datacadastro}"></h:outputText>
-					</p:column>
-					<p:column headerText="Prioridade">
-						<h:outputText value="#{model.prioridade}"></h:outputText>
-					</p:column>
-				</p:dataTable>
+				<h:commandButton action="#{paciente.adicionar()}"
+					validateClient="true" value="Submit">
+					<f:ajax execute="@form" render="@form" />
+				</h:commandButton>
 
-			</p:fieldset>
+			</p:panelGrid>
 		</h:form>
-
-
-
-
 	</ui:define>
 </ui:composition>
 </html>
