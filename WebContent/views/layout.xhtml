@@ -6,42 +6,6 @@
 
 
 <h:head>
-	<script type="text/javascript">
-    PrimeFaces.locales['es'] = {
-        closeText: 'Cerrar',
-        prevText: 'Anterior',
-        nextText: 'Siguiente',
-        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-        dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-        weekHeader: 'Semana',
-        firstDayOfWeek: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: '',
-        timeOnlyTitle: 'Sólo hora',
-        timeText: 'Tiempo',
-        hourText: 'Hora',
-        minuteText: 'Minuto',
-        secondText: 'Segundo',
-        currentText: 'Fecha actual',
-        ampm: false,
-        month: 'Mes',
-        week: 'Semana',
-        day: 'Día',
-        allDayText: 'Todo el día'
-    };
-</script>
-
-	<script type="text/javascript">
-    //<![CDATA[
-    function dateTemplateFunc(date) {
-        return '<span style="background-color:' + ((date.day < 21 && date.day > 10) ? '#81C784' : 'inherit') + ';border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">' + date.day + '</span>';
-    }
-    //]]>
-</script>
 
 	<style type="text/css">
 .value {
@@ -184,25 +148,28 @@
 		</ul>
 
 
-		<ui:insert name="conteudo">
-			<div id="content-wrapper">
-				<div class="container-fluid">
-					<ui:include src="#{requestScope.views}"></ui:include>
-				</div>
-				<!-- /.container-fluid -->
 
-				<!-- Sticky Footer -->
-				<footer class="sticky-footer">
-					<div class="container my-auto">
-						<div class="copyright text-center my-auto">
-							<span>Copyright © Your Website 2018</span>
-						</div>
-					</div>
-				</footer>
-
+		<div id="content-wrapper">
+			<div class="container-fluid">
+				<ui:insert name="conteudo">
+					<ui:include src="#{requestScope.views}">
+					</ui:include>
+				</ui:insert>
 			</div>
-			<!-- /.content-wrapper -->
-		</ui:insert>
+			<!-- /.container-fluid -->
+
+			<!-- Sticky Footer -->
+			<footer class="sticky-footer">
+				<div class="container my-auto">
+					<div class="copyright text-center my-auto">
+						<span>Copyright © Your Website 2018</span>
+					</div>
+				</div>
+			</footer>
+
+		</div>
+		<!-- /.content-wrapper -->
+
 
 	</div>
 	<!-- /#wrapper -->

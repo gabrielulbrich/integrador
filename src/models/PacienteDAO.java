@@ -61,7 +61,7 @@ public class PacienteDAO {
 			pst.setString(6, model.getTelefone());
 			pst.setString(7, model.getDatacadastro());
 			pst.setString(8, model.getHoracadastro());
-			pst.setInt(9, prioridade--);
+			pst.setInt(9, --prioridade);
 			pst.setString(10, categoria);
 			pst.execute();
 			conexao.desconecta();
@@ -110,7 +110,7 @@ public class PacienteDAO {
 				model.setTelefone(rs.getString("telefone"));
 				model.setDatacadastro(rs.getString("datacadastro"));
 //				model.setHoracadastro(rs.getString("horacadastro"));
-				model.setPrioridade(rs.getString("prioridade"));
+				model.setPrioridade(rs.getString("categoria"));
 				models.add(model);
 
 			}

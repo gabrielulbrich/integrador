@@ -15,6 +15,7 @@ public class Paciente_model {
 	private String telefone;
 	private String horacadastro;
 	private String datacadastro;	
+	private String categoria;
 	private String prioridade;
 		
 	public int getCod_paciente() {
@@ -99,6 +100,14 @@ public class Paciente_model {
 
 	public void setPrioridade(String prioridade) {
 		this.prioridade = prioridade;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 	
 
