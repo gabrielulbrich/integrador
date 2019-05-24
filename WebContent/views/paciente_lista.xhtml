@@ -18,43 +18,43 @@
 				binding="#{table}" var="model"
 				class="table table-striped table-hover table-bordered tableUpdated">
 				<p:column headerText="Nome">
-					<f:facet name="header">NOME</f:facet>
+					<f:facet name="header">Nome</f:facet>
 					<h:outputText value="#{model.nome}"></h:outputText>
 				</p:column>
 				<p:column headerText="Idade">
-					<f:facet name="header">IDADE</f:facet>
+					<f:facet name="header">Idade</f:facet>
 					<h:outputText value="#{model.idade}"></h:outputText>
 				</p:column>
 				<p:column headerText="Sexo">
-					<f:facet name="header">SEXO</f:facet>
+					<f:facet name="header">Sexo</f:facet>
 					<h:outputText value="#{model.sexo}"></h:outputText>
 				</p:column>
 				<p:column headerText="Telefone">
-					<f:facet name="header">TELEFONE</f:facet>
+					<f:facet name="header">Telefone</f:facet>
 					<h:outputText value="#{model.telefone}"></h:outputText>
 				</p:column>
 				<p:column headerText="Data cadastro">
-					<f:facet name="header">DATA DE CADASTRO</f:facet>
+					<f:facet name="header">Data de Cadastro</f:facet>
 					<h:outputText value="#{model.datacadastro}"></h:outputText>
 				</p:column>
 				<p:column headerText="Prioridade">
-					<f:facet name="header">PRIORIDADE</f:facet>
+					<f:facet name="header">Categoria</f:facet>
+					<h:outputText value="#{model.categoria}"></h:outputText>
+				</p:column>
+				<p:column headerText="Prioridade">
+					<f:facet name="header">Prioridade</f:facet>
 					<h:outputText value="#{model.prioridade}"></h:outputText>
 				</p:column>
 				<h:column>
-					<f:facet name="header">Update</f:facet>
+					<f:facet name="header">Ação</f:facet>
 					<h:commandButton value="Update" class="btn btn-primary" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Delete</f:facet>
-					<h:commandButton value="Delete" class="btn btn-danger">
+					<h:commandButton value="Emergencia" class="btn btn-danger">
 						<f:ajax execute="@form" render="@form" />
-					</h:commandButton>
+					</h:commandButton>					
 				</h:column>
 			</h:dataTable>
 			<center>
-				<a class="btn btn-success btnSpace">Cadastrar
-					novo Veiculo</a>
+				<a class="btn btn-success btnSpace">Cadastrar novo Paciente</a>
 			</center>
 		</h:form>
 	</ui:define>

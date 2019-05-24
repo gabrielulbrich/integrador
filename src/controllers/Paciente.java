@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.servlet.ServletException;
@@ -39,7 +40,10 @@ public class Paciente extends HttpServlet{
 //    		response.sendRedirect("/Integrador/login");
 //    	}
 //    }
-    
+    @PostConstruct
+    public void init() {
+    	lista = pac.Buscar();
+    }
 	
 	public void adicionar() {
 		lista.add(model);

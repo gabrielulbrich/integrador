@@ -110,7 +110,8 @@ public class PacienteDAO {
 				model.setTelefone(rs.getString("telefone"));
 				model.setDatacadastro(rs.getString("datacadastro"));
 //				model.setHoracadastro(rs.getString("horacadastro"));
-				model.setPrioridade(rs.getString("categoria"));
+				model.setPrioridade(rs.getString("prioridade"));
+				model.setCategoria(rs.getString("categoria"));
 				models.add(model);
 
 			}
