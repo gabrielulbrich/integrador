@@ -13,6 +13,7 @@
 				<h:outputText value="LISTA DE PACIENTES" />
 			</h2>
 		</center>
+		<h:form id="frmPacienteLista">
 		<h:dataTable id="pacienteTable" value="#{paciente.lista}"
 			binding="#{table}" var="model"
 			class="table table-striped table-hover table-bordered tableUpdated">
@@ -44,25 +45,27 @@
 				<f:facet name="header">Prioridade</f:facet>
 				<h:outputText value="#{model.prioridade}"></h:outputText>
 			</p:column>
-			<h:column>
+			<p:column>
 				<f:facet name="header">Ação</f:facet>
-				<h:commandButton value="Update" onclick="PF('dlg').show();"
-					action="@form" class="btn btn-primary" />
-				<h:commandButton value="Emergencia" class="btn btn-danger">
-					<f:ajax execute="@form" render="@form" />
-				</h:commandButton>
-			</h:column>
+				<p:commandButton icon="ui-icon-pencil" onclick="PF('dlg').show();" update=":frmUpdate:pgUpdate">
+					<f:setPropertyActionListener value="#{model}" target="#{paciente.model}"/>
+				</p:commandButton>
+				<p:commandButton icon="ui-icon-plusthick">
+				</p:commandButton>
+			</p:column>
 		</h:dataTable>
+		</h:form>
 		<center>
 			<a class="btn btn-success btnSpace">Cadastrar novo Paciente</a>
 		</center>
 
-		<h:form>
+		<h:form id="frmUpdate">
 			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 
-			<p:dialog header="Editar prioridade" widgetVar="dlg"
+			<p:dialog modal="true" appendTo="@(body)" header="Editar prioridade" widgetVar="dlg"
 				resizable="false">
-				<h:panelGrid columns="1" cellpadding="5">
+				<h:panelGrid id="pgUpdate" columns="1" cellpadding="5">
+					<h:outputText value="#{paciente.model.telefone}"></h:outputText>
 					<h:outputLabel for="prioridade" value="Selecione a prioridade:" />
 					<p:selectOneMenu id="prioridade"
 						value="#{paciente.model.prioridade}" required="true"

@@ -76,8 +76,6 @@ public class Paciente extends HttpServlet{
 
 	public void setlista(List<Paciente_model> lista) {
 		this.lista = lista;
-	}
-	
-	
+	}	
 
 }
