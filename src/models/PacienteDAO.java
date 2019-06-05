@@ -31,21 +31,10 @@ public class PacienteDAO {
 //		    System.out.println("Erro na data");
 //		}
 		prioridade = Integer.parseInt(model.getPrioridade());
-		System.out.println(prioridade);
-		if (prioridade == 100) {
-			categoria = "b";
-		}else if(prioridade == 200) {
-			categoria = "m";
-		}else if(prioridade == 300) {
-			categoria = "a";
-		}else if(prioridade == 400) {
-			categoria = "e";
-		}else {
-			categoria = "0";
-		}
-		System.out.println(categoria);
 		
-		prioridade = selectPrioridade(categoria);
+		categoria = this.getCategoria(prioridade);
+		
+		prioridade = selectMinPrioridade(categoria);
 		if (prioridade == 0) {
 			prioridade = Integer.parseInt(model.getPrioridade());
 		}
@@ -61,7 +50,7 @@ public class PacienteDAO {
 			pst.setString(6, model.getTelefone());
 			pst.setString(7, model.getDatacadastro());
 			pst.setString(8, model.getHoracadastro());
-			pst.setInt(9, --prioridade);
+			pst.setInt(9, prioridade);
 			pst.setString(10, categoria);
 			pst.execute();
 			conexao.desconecta();
@@ -74,7 +63,7 @@ public class PacienteDAO {
 		}
 	}
 
-	public int selectPrioridade(String categoria) {
+	public int selectMinPrioridade(String categoria) {
 		conexao.conexao();
 		try {
 			PreparedStatement pst = conexao.con.prepareStatement("SELECT MIN(prioridade) as prioridade FROM paciente where categoria='"+categoria+"';");
@@ -83,7 +72,26 @@ public class PacienteDAO {
 				prioridade = (Integer) rs.getObject("prioridade");
 			}
 			conexao.desconecta();
-			return prioridade;
+			return --prioridade;
+
+		} catch (Exception e) {
+			conexao.desconecta();
+			System.out.println("Erro de SQL: " + e);
+			e.printStackTrace();
+			return 0;
+		}
+	}
+	
+	public int selectMaxPrioridade(String categoria) {
+		conexao.conexao();
+		try {
+			PreparedStatement pst = conexao.con.prepareStatement("SELECT MAX(prioridade) as prioridade FROM paciente where categoria='"+categoria+"';");
+			ResultSet rs = pst.executeQuery();
+			if (rs.next()) {
+				prioridade = (Integer) rs.getObject("prioridade");
+			}
+			conexao.desconecta();
+			return ++prioridade;
 
 		} catch (Exception e) {
 			conexao.desconecta();
@@ -93,10 +101,10 @@ public class PacienteDAO {
 		}
 	}
 
-	public List<Paciente_model> Buscar() {
+	public List<Paciente_model> selectPaciente() {
 		conexao.conexao();
 		try {
-			PreparedStatement pst = conexao.con.prepareStatement("SELECT * FROM paciente ORDER BY prioridade ASC;");
+			PreparedStatement pst = conexao.con.prepareStatement("SELECT * FROM paciente;");
 			ResultSet rs = pst.executeQuery();
 			List<Paciente_model> models = new ArrayList<>();
 			while (rs.next()) {
@@ -126,13 +134,33 @@ public class PacienteDAO {
 		}
 	}
 
-	public boolean Mudar(Paciente_model mode) {
+	public boolean editarPaciente(Paciente_model mode) {
+		int old_prioridade = Integer.parseInt(mode.getPrioridade());
+		int new_prioridade = Integer.parseInt(mode.getNew_prioridade());
+		System.out.println("old prioridade::: "+old_prioridade);
+		System.out.println("new prioridade::: "+new_prioridade);
+				
+		String old_categoria = mode.getCategoria();		
+		String new_categoria = getCategoria(Integer.parseInt(mode.getNew_prioridade()));
+		
+		new_prioridade = this.getNewprioridade(new_prioridade, old_prioridade, new_categoria, old_categoria);
+		
+		System.out.println("nova prioridade CLASSE::: "+new_prioridade);
+		System.out.println("old categoria::: "+old_categoria);		
+		System.out.println("nova categoria::: "+new_categoria);
+		System.out.println("----------------------------");
+		
+		if (new_prioridade == 0)
+			return false;
+		
+		
 		conexao.conexao();
 		try {
 			PreparedStatement pst = conexao.con.prepareStatement(
-					"UPDATE paciente SET prioridade = ? where cod_paciente = ?;");
-			pst.setInt(1, Integer.parseInt(mode.getPrioridade()));
-			pst.setInt(2, mode.getCod_paciente());
+					"UPDATE paciente SET prioridade = ?, categoria = ? where cod_paciente = ?;");
+			pst.setInt(1, new_prioridade);
+			pst.setString(2, new_categoria);
+			pst.setInt(3, mode.getCod_paciente());
 			
 			pst.execute();
 			conexao.desconecta();
@@ -157,6 +185,37 @@ public class PacienteDAO {
 		} catch (Exception sqlException) {
 			sqlException.printStackTrace();
 		}
+	}
+	
+	private String getCategoria(int prioridade) {
+		if (prioridade == 100) {
+			categoria = "b";
+		}else if(prioridade == 200) {
+			categoria = "m";
+		}else if(prioridade == 300) {
+			categoria = "a";
+		}else if(prioridade == 400) {
+			categoria = "e";
+		}else {
+			categoria = "0";
+		}		
+		return categoria;
+	}
+	
+	private int getNewprioridade(int new_prioridade, int old_prioridade, String new_categoria, String old_categoria) {
+		if(new_categoria.equals(old_categoria)){
+			System.out.println("AQUI1");
+			return prioridade = 0;			
+		}else if(new_prioridade > old_prioridade) {
+			System.out.println("AQUI2");
+			prioridade = this.selectMinPrioridade(new_categoria);			
+			return prioridade;
+		}else if (new_prioridade < old_prioridade) {
+			System.out.println("AQUI3");
+			prioridade = this.selectMaxPrioridade(new_categoria);
+			return prioridade;
+		}
+		return prioridade;
 	}
 
 }

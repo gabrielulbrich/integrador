@@ -42,7 +42,7 @@ public class Paciente extends HttpServlet{
 //    }
     @PostConstruct
     public void init() {
-    	lista = pac.Buscar();
+    	lista = pac.selectPaciente();
     }
 	
 	public void adicionar() {
@@ -51,8 +51,8 @@ public class Paciente extends HttpServlet{
 		model = new Paciente_model();
 	}
 	
-	public void Listar() {
-		lista = pac.Buscar();
+	public void listar() {
+		lista = pac.selectPaciente();
 	}
 
 	public Paciente_model getModel() {
@@ -60,10 +60,9 @@ public class Paciente extends HttpServlet{
 	}
 
 	public void Editar() {
-		System.out.println(model.getPrioridade());
-
-		pac.Mudar(model);		
+		pac.editarPaciente(model);		
 		model = new Paciente_model();
+		this.listar();
 	}
 	
 	public void setModel(Paciente_model model) {

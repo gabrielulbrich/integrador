@@ -17,6 +17,7 @@ public class Paciente_model {
 	private String datacadastro;	
 	private String categoria;
 	private String prioridade;
+	private String new_prioridade;
 		
 	public int getCod_paciente() {
 		return cod_paciente;
@@ -108,6 +109,14 @@ public class Paciente_model {
 
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
+	}
+
+	public String getNew_prioridade() {
+		return new_prioridade;
+	}
+
+	public void setNew_prioridade(String new_prioridade) {
+		this.new_prioridade = new_prioridade;
 	}
 	
 
