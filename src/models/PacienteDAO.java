@@ -130,17 +130,10 @@ public class PacienteDAO {
 		conexao.conexao();
 		try {
 			PreparedStatement pst = conexao.con.prepareStatement(
-					"UPDATE paciente SET nome = ?, cpf = ?, idade = ?, sexo = ?, endereco = ?, telefone = ?, datacadastro = ?, horacadastro = ?, prioridade = ? where cod_paciente = ?;");
-			pst.setInt(1, mode.getCod_paciente());
-			pst.setString(2, mode.getNome());
-			pst.setString(3, mode.getCpf());
-			pst.setString(4, mode.getIdade());
-			pst.setString(5, mode.getSexo());
-			pst.setString(6, mode.getEndereco());
-			pst.setString(7, mode.getTelefone());
-			pst.setString(8, mode.getDatacadastro());
-			pst.setString(9, mode.getHoracadastro());
-			pst.setString(10, mode.getPrioridade());
+					"UPDATE paciente SET prioridade = ? where cod_paciente = ?;");
+			pst.setInt(1, Integer.parseInt(mode.getPrioridade()));
+			pst.setInt(2, mode.getCod_paciente());
+			
 			pst.execute();
 			conexao.desconecta();
 			return true;

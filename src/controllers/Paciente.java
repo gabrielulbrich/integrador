@@ -60,10 +60,10 @@ public class Paciente extends HttpServlet{
 	}
 
 	public void Editar() {
-		lista.add(model);
-		pac.Mudar(model);
+		System.out.println(model.getPrioridade());
+
+		pac.Mudar(model);		
 		model = new Paciente_model();
-		
 	}
 	
 	public void setModel(Paciente_model model) {

@@ -47,7 +47,7 @@
 			</p:column>
 			<p:column>
 				<f:facet name="header">Ação</f:facet>
-				<p:commandButton icon="ui-icon-pencil" onclick="PF('dlg').show();" update=":frmUpdate:pgUpdate">
+				<p:commandButton icon="ui-icon-pencil" onclick="PF('dlg').show();" update=":frmUpdatee:pgUpdate">
 					<f:setPropertyActionListener value="#{model}" target="#{paciente.model}"/>
 				</p:commandButton>
 				<p:commandButton icon="ui-icon-plusthick">
@@ -59,27 +59,27 @@
 			<a class="btn btn-success btnSpace">Cadastrar novo Paciente</a>
 		</center>
 
-		<h:form id="frmUpdate">
+		<h:form id="frmUpdatee">
 			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 
 			<p:dialog modal="true" appendTo="@(body)" header="Editar prioridade" widgetVar="dlg"
 				resizable="false">
 				<h:panelGrid id="pgUpdate" columns="1" cellpadding="5">
-					<h:outputText value="#{paciente.model.telefone}"></h:outputText>
-					<h:outputLabel for="prioridade" value="Selecione a prioridade:" />
-					<p:selectOneMenu id="prioridade"
+					<h:outputText value="#{paciente.model.cod_paciente}" />
+					<h:outputLabel value="Selecione a prioridade:" />
+					<p:selectOneMenu id="pri"
 						value="#{paciente.model.prioridade}" required="true"
 						style="width:250px">
 						<f:selectItem itemLabel="Selecione" itemValue="" />
 						<f:selectItem itemLabel="Baixa" itemValue="100" />
 						<f:selectItem itemLabel="Média" itemValue="200" />
 						<f:selectItem itemLabel="Alta" itemValue="300" />
-						<f:selectItem itemLabel="Emergência" itemValue="400" />
 					</p:selectOneMenu>
 
 					<f:facet name="footer">
-						<p:commandButton value="Editar" update="growl"
-							action="#{userLoginView.login}"
+						<p:commandButton value="Editar"
+							action="#{paciente.Editar}"
+							update="@form"
 							oncomplete="handleLoginRequest(xhr, status, args)" />
 					</f:facet>
 				</h:panelGrid>
