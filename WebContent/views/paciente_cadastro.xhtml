@@ -57,7 +57,7 @@
 					<f:selectItem itemLabel="Emergência" itemValue="400" />
 				</p:selectOneMenu>
 
-				<h:commandButton action="#{paciente.adicionar()}"
+				<h:commandButton action="#{paciente.cadastrar}"
 					validateClient="true" value="Submit">
 					<f:ajax execute="@form" render="@form" />
 				</h:commandButton>

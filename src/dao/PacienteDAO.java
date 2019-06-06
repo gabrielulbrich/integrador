@@ -1,4 +1,4 @@
-package models;
+package dao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import models.ConexaoBD;
+import models.Paciente_model;
 
 public class PacienteDAO {
 
@@ -178,14 +179,15 @@ public class PacienteDAO {
 		return false;
 	}
 
-	public static void deletarPaciente(Integer cod_paciente) {
+	public static void atenderPaciente(Paciente_model model) {
+		System.out.println("codigo "+model.getCod_paciente());
+		System.out.println("priii  "+model.getPrioridade());
 		Statement stm;
-		List<Paciente_model> models = new ArrayList<>();
 		ConexaoBD conexao = new ConexaoBD();
 		conexao.conexao();
 		try {
 			stm = conexao.con.createStatement();
-			stm.executeQuery("DELETE FROM PACIENTE WHERE cod_paciente='" + cod_paciente + "';");
+			stm.executeQuery("DELETE FROM PACIENTE WHERE cod_paciente='" + model.getCod_paciente() + "';");
 			conexao.desconecta();
 		} catch (Exception sqlException) {
 			sqlException.printStackTrace();

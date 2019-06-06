@@ -18,9 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.PacienteDAO;
 import models.ConexaoBD;
 import models.Paciente_model;
-import models.PacienteDAO;
 
 @ManagedBean
 @SessionScoped
@@ -37,24 +37,30 @@ public class Paciente extends HttpServlet{
     }
     
 	
-	public void adicionar() {
+	public void cadastrar() {
 		lista.add(model);
 		pac.inserir(model);
-		model = new Paciente_model();
-	}
-	
-	public void listar() {
-		lista = pac.selectPaciente();
+		this.init();
+//		model = new Paciente_model();
 	}
 
 	public Paciente_model getModel() {
 		return model;
 	}
 
-	public void Editar() {
+	public void editar() {
 		pac.editarPaciente(model);		
-		model = new Paciente_model();
-		this.listar();
+//		model = new Paciente_model();
+		this.init();
+	}
+	
+	public void atender() {
+		System.out.println("atender");
+		Paciente_model primeiro = lista.get(0);
+		System.out.println(primeiro.getPrioridade());
+		PacienteDAO.atenderPaciente(primeiro);		
+//		model = new Paciente_model();
+		this.init();
 	}
 	
 	public void setModel(Paciente_model model) {

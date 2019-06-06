@@ -9,6 +9,11 @@
 <ui:composition template="layout.xhtml">
 	<ui:define name="conteudo">
 		<center>
+		<h:form>
+			<p:commandButton value="Atender" update="frmPacienteLista" action="#{paciente.atender}"/>
+		</h:form>
+		</center>		
+		<center>
 			<h2>
 				<h:outputText value="LISTA DE PACIENTES" />
 			</h2>
@@ -56,10 +61,8 @@
 		</h:dataTable>
 		</h:form>
 		<center>
-			<a class="btn btn-success btnSpace">Cadastrar novo Paciente</a>
-		</center>
-
-		
+			<a class="btn btn-success btnSpace" href="/Integrador/views/paciente_cadastro.xhtml">Cadastrar novo Paciente</a>
+		</center>		
 			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 
 			<p:dialog modal="true" appendTo="@(body)" header="Editar prioridade" widgetVar="dlg"
@@ -79,7 +82,7 @@
 
 					<f:facet name="footer">
 						<p:commandButton value="Editar"
-							action="#{paciente.Editar}"
+							action="#{paciente.editar}"
 							update="frmPacienteLista"
 							oncomplete="PF('dlg').hide();"
 						/>
@@ -87,9 +90,6 @@
 				</h:panelGrid>
 				</h:form>
 			</p:dialog>
-		
-
-
 	</ui:define>
 </ui:composition>
 
