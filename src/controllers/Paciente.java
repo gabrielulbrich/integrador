@@ -28,28 +28,12 @@ public class Paciente extends HttpServlet{
 	private Paciente_model model = new Paciente_model();
 	private List<Paciente_model> lista = new Vector<>();
 	private PacienteDAO pac = new PacienteDAO();	
-	private HeapSort heap = new HeapSort();
 
     @PostConstruct
     public void init() {    	
     	lista = pac.selectPaciente();
         HeapSort ob = new HeapSort(); 
-        ob.sort(lista); 
-//        System.out.println("Sorted array is"); 
-//        ob.printArray(arr); 
-
-//    	this.bubbleSort(lista);
-    	
-//    	for (Iterator<Paciente_model> i = lista.iterator(); i.hasNext();) {
-//    	    Paciente_model item = i.next();
-//    	    System.out.println(item.getPrioridade());
-//    	}
-    	
-    }
-    
-    public void bubbleSort(List<Paciente_model> paciente) {
-    	Paciente_model p = new Paciente_model();
-    	paciente.get(1);
+        ob.sort(lista);    	
     }
     
 	

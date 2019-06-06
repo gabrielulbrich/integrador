@@ -38,7 +38,7 @@ public class Login extends HttpServlet {
     		if(verificaSenha(senha)) {
     			session.setAttribute("nomeUsuario", model.getNome());
     			session.setAttribute("logado", true);
-    			response.sendRedirect("/integrador/dashboard");
+    			response.sendRedirect("/Integrador/views/dashboard.xhtml");
     		}else {
     			invalidaSessao(request, response);
     		}
