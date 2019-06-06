@@ -1,10 +1,12 @@
 package controllers;
 
 import java.util.List;
+import java.util.Vector;
 import java.io.IOException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -24,26 +26,32 @@ import models.PacienteDAO;
 @SessionScoped
 public class Paciente extends HttpServlet{
 	private Paciente_model model = new Paciente_model();
-	private List<Paciente_model> lista = new ArrayList<>();
-	private PacienteDAO pac = new PacienteDAO();
-	
+	private List<Paciente_model> lista = new Vector<>();
+	private PacienteDAO pac = new PacienteDAO();	
+	private HeapSort heap = new HeapSort();
 
-    
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//    	HttpSession session = request.getSession();
-//    	boolean logado = Boolean.valueOf(String.valueOf(session.getAttribute("logado")));
-//    	if(logado == true) {
-//	    	request.setAttribute("views", "paciente_cadastro.xhtml");
-//	    	request.getRequestDispatcher("/views/layout.xhtml").forward(request, response);
-//    	}else {
-//    		response.sendRedirect("/Integrador/login");
-//    	}
-//    }
     @PostConstruct
-    public void init() {
+    public void init() {    	
     	lista = pac.selectPaciente();
+        HeapSort ob = new HeapSort(); 
+        ob.sort(lista); 
+//        System.out.println("Sorted array is"); 
+//        ob.printArray(arr); 
+
+//    	this.bubbleSort(lista);
+    	
+//    	for (Iterator<Paciente_model> i = lista.iterator(); i.hasNext();) {
+//    	    Paciente_model item = i.next();
+//    	    System.out.println(item.getPrioridade());
+//    	}
+    	
     }
+    
+    public void bubbleSort(List<Paciente_model> paciente) {
+    	Paciente_model p = new Paciente_model();
+    	paciente.get(1);
+    }
+    
 	
 	public void adicionar() {
 		lista.add(model);

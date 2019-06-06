@@ -69,7 +69,12 @@ public class PacienteDAO {
 			PreparedStatement pst = conexao.con.prepareStatement("SELECT MIN(prioridade) as prioridade FROM paciente where categoria='"+categoria+"';");
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
-				prioridade = (Integer) rs.getObject("prioridade");
+				if (rs.getObject("prioridade") != null) {
+					prioridade = (Integer) rs.getObject("prioridade");
+				}else {
+					conexao.desconecta();
+					return 0;
+				}
 			}
 			conexao.desconecta();
 			return --prioridade;
@@ -208,11 +213,15 @@ public class PacienteDAO {
 			return prioridade = 0;			
 		}else if(new_prioridade > old_prioridade) {
 			System.out.println("AQUI2");
-			prioridade = this.selectMinPrioridade(new_categoria);			
+			prioridade = this.selectMinPrioridade(new_categoria);
+			if (prioridade == 0)
+				prioridade = new_prioridade;
 			return prioridade;
 		}else if (new_prioridade < old_prioridade) {
 			System.out.println("AQUI3");
 			prioridade = this.selectMaxPrioridade(new_categoria);
+			if (prioridade == 0)
+				prioridade = new_prioridade;
 			return prioridade;
 		}
 		return prioridade;
