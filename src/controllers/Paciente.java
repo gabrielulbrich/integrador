@@ -55,12 +55,8 @@ public class Paciente extends HttpServlet{
 	}
 	
 	public void atender() {
-		System.out.println("atender");
 		Paciente_model primeiro = lista.get(0);
-		System.out.println(primeiro.getPrioridade());
-		PacienteDAO.atenderPaciente(primeiro);		
-//		model = new Paciente_model();
-		this.init();
+		PacienteDAO.atenderPaciente(primeiro);
 	}
 	
 	public void setModel(Paciente_model model) {

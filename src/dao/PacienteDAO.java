@@ -180,8 +180,6 @@ public class PacienteDAO {
 	}
 
 	public static void atenderPaciente(Paciente_model model) {
-		System.out.println("codigo "+model.getCod_paciente());
-		System.out.println("priii  "+model.getPrioridade());
 		Statement stm;
 		ConexaoBD conexao = new ConexaoBD();
 		conexao.conexao();
