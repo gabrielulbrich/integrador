@@ -41,25 +41,21 @@ public class Paciente extends HttpServlet {
 	}
 
 	public void cadastrar() {
+		FacesContext context = FacesContext.getCurrentInstance();
 		lista.add(model);
-		pac.inserir(model);
+		if (pac.inserir(model))
+			context.addMessage(null, new FacesMessage("Sucesso", "Paciente cadastrado com sucesso"));
+		else
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro", "Erro ao cadastrar"));	
 		this.init();
-	}
-
-	public Paciente_model getModel() {
-		return model;
 	}
 
 	public void editar() {
 		FacesContext context = FacesContext.getCurrentInstance();
-		if (pac.editarPaciente(model)) {
-			System.out.println("SUCESSO");
+		if (pac.editarPaciente(model))
 			context.addMessage(null, new FacesMessage("Sucesso", "Editado com sucesso"));
-		}else {
-			System.out.println("ERRO");
-			context.addMessage(null, new FacesMessage("Erro", "Escolha outra categoria"));
-		}
-			
+		else
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro", "Escolha outra categoria"));			
 		this.init();
 	}
 
@@ -69,7 +65,7 @@ public class Paciente extends HttpServlet {
 		if (pac.atenderPaciente(primeiro))
 			context.addMessage(null, new FacesMessage("Sucesso", "Paciente " + primeiro.getNome() + " foi atendido"));
 		else
-			context.addMessage(null, new FacesMessage("Erro", "Não foi possível atender paciente"));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro", "Não foi possível atender paciente"));
 		this.init();
 	}
 
@@ -79,10 +75,14 @@ public class Paciente extends HttpServlet {
 		if (pac.editarPaciente(model))
 			context.addMessage(null, new FacesMessage("Sucesso", "Paciente movido para emergencia"));
 		else
-			context.addMessage(null, new FacesMessage("Erro", "Não foi possível mover paciente para emergencia"));
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro", "Não foi possível mover paciente para emergencia"));
 		this.init();
 	}
 
+	public Paciente_model getModel() {
+		return model;
+	}
+	
 	public void setModel(Paciente_model model) {
 		this.model = model;
 	}

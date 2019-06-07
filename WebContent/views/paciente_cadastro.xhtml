@@ -8,8 +8,9 @@
 
 <ui:composition template="layout.xhtml">
 	<ui:define name="conteudo">
-		<h:form id="frm">
-			<p:panelGrid columns="2" cellpadding="5">
+		<h:form id="frmCadastro">
+			<p:growl id="msgCadastro" sticky="true" showDetail="true" life="800" />
+			<p:panelGrid id="gridCadastro" columns="2" cellpadding="5">
 				<p:outputLabel for="nome" value="Nome:" />
 				<p:inputText id="nome" value="#{paciente.model.nome}"
 					required="true"></p:inputText>
@@ -57,10 +58,9 @@
 					<f:selectItem itemLabel="Emergência" itemValue="400" />
 				</p:selectOneMenu>
 
-				<h:commandButton action="#{paciente.cadastrar}"
-					validateClient="true" value="Submit">
-					<f:ajax execute="@form" render="@form" />
-				</h:commandButton>
+				<p:commandButton action="#{paciente.cadastrar}"
+					value="Submit" update=":frmCadastro:gridCadastro: msgCadastro">
+				</p:commandButton>
 
 			</p:panelGrid>
 		</h:form>

@@ -10,7 +10,8 @@
 	<ui:define name="conteudo">
 		<center>
 		<h:form>
-			<p:commandButton value="Atender" update="frmPacienteLista" action="#{paciente.atender}"/>
+			<p:growl id="msgAtendimento" sticky="true" showDetail="true" life="800" />
+			<p:commandButton value="Atender" update=":frmPacienteLista:pacienteTable: msgAtendimento" action="#{paciente.atender}"/>
 		</h:form>
 		</center>		
 		<center>
@@ -69,7 +70,7 @@
 			<p:dialog modal="true" appendTo="@(body)" header="Editar prioridade" widgetVar="dlgUpdate"
 				resizable="false">
 				<h:form id="frmUpdate">
-				<p:growl id="growl" sticky="true" showDetail="true" life="800" />
+				<p:growl id="msgUpdate" sticky="true" showDetail="true" life="800" />
 					<h:panelGrid id="pgUpdate" columns="1" cellpadding="5">
 						<h:outputText value="#{paciente.model.cod_paciente}" />
 						<h:outputLabel value="Selecione a prioridade:" />
@@ -85,7 +86,7 @@
 						<f:facet name="footer">
 							<p:commandButton value="Editar"
 								action="#{paciente.editar}"
-								update=":frmPacienteLista:pacienteTable: growl"
+								update=":frmPacienteLista:pacienteTable: msgUpdate"
 								oncomplete="PF('dlgUpdate').hide();"
 							/>
 						</f:facet>
@@ -98,14 +99,14 @@
 			<p:dialog modal="true" appendTo="@(body)" header="Emergencia" widgetVar="dlgEmergencia"
 				resizable="false">
 				<h:form id="frmEmergencia">
-				<p:growl id="emergencia" sticky="true" showDetail="true" life="800" />
+				<p:growl id="msgEmergencia" sticky="true" showDetail="true" life="800" />
 					<h:panelGrid id="pgEmergencia" columns="1" cellpadding="5">
 						<h:outputLabel value="Deseja mover o paciente #{paciente.model.nome} para emergencia?" />
 	
 						<f:facet name="footer">
 							<p:commandButton value="Sim"
 								action="#{paciente.emergencia}"
-								update=":frmPacienteLista:pacienteTable: emergencia"
+								update=":frmPacienteLista:pacienteTable: msgEmergencia"
 								oncomplete="PF('dlgEmergencia').hide();"
 							/>
 							<p:commandButton value="Não"
