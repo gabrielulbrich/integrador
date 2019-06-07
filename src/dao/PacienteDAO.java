@@ -94,7 +94,12 @@ public class PacienteDAO {
 			PreparedStatement pst = conexao.con.prepareStatement("SELECT MAX(prioridade) as prioridade FROM paciente where categoria='"+categoria+"';");
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
-				prioridade = (Integer) rs.getObject("prioridade");
+				if (rs.getObject("prioridade") != null) {
+					prioridade = (Integer) rs.getObject("prioridade");
+				}else {
+					conexao.desconecta();
+					return 0;
+				}
 			}
 			conexao.desconecta();
 			return ++prioridade;
@@ -143,18 +148,9 @@ public class PacienteDAO {
 	public boolean editarPaciente(Paciente_model mode) {
 		int old_prioridade = Integer.parseInt(mode.getPrioridade());
 		int new_prioridade = Integer.parseInt(mode.getNew_prioridade());
-		System.out.println("old prioridade::: "+old_prioridade);
-		System.out.println("new prioridade::: "+new_prioridade);
-				
-		String old_categoria = mode.getCategoria();		
+		String old_categoria = mode.getCategoria();
 		String new_categoria = getCategoria(Integer.parseInt(mode.getNew_prioridade()));
-		
 		new_prioridade = this.getNewprioridade(new_prioridade, old_prioridade, new_categoria, old_categoria);
-		
-		System.out.println("nova prioridade CLASSE::: "+new_prioridade);
-		System.out.println("old categoria::: "+old_categoria);		
-		System.out.println("nova categoria::: "+new_categoria);
-		System.out.println("----------------------------");
 		
 		if (new_prioridade == 0)
 			return false;
@@ -180,6 +176,10 @@ public class PacienteDAO {
 	}
 
 	public static void atenderPaciente(Paciente_model model) {
+
+	}
+	
+	public boolean emergenciaPaciente(Paciente_model model) {
 		Statement stm;
 		ConexaoBD conexao = new ConexaoBD();
 		conexao.conexao();
@@ -187,9 +187,12 @@ public class PacienteDAO {
 			stm = conexao.con.createStatement();
 			stm.executeQuery("DELETE FROM PACIENTE WHERE cod_paciente='" + model.getCod_paciente() + "';");
 			conexao.desconecta();
+			return true;
 		} catch (Exception sqlException) {
 			sqlException.printStackTrace();
 		}
+		conexao.desconecta();
+		return false;
 	}
 	
 	private String getCategoria(int prioridade) {

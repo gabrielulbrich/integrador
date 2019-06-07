@@ -57,6 +57,13 @@ public class Paciente extends HttpServlet{
 	public void atender() {
 		Paciente_model primeiro = lista.get(0);
 		PacienteDAO.atenderPaciente(primeiro);
+		this.init();
+	}
+	
+	public void emergencia() {
+		model.setNew_prioridade("400");
+		pac.editarPaciente(model);
+		this.init();
 	}
 	
 	public void setModel(Paciente_model model) {

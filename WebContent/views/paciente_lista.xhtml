@@ -52,10 +52,11 @@
 			</p:column>
 			<p:column>
 				<f:facet name="header">Ação</f:facet>
-				<p:commandButton  icon="fa fa-edit" onclick="PF('dlg').show();" update=":frmUpdatee:pgUpdate">
+				<p:commandButton  icon="fa fa-edit" onclick="PF('dlgUpdate').show();" update=":frmUpdate:pgUpdate">
 					<f:setPropertyActionListener value="#{model}" target="#{paciente.model}"/>
 				</p:commandButton>
-				<p:commandButton icon="fa fa-heartbeat">
+				<p:commandButton icon="fa fa-heartbeat" onclick="PF('dlgEmergencia').show();" update=":frmEmergencia:pgEmergencia">
+					<f:setPropertyActionListener value="#{model}" target="#{paciente.model}"/>
 				</p:commandButton>
 			</p:column>
 		</h:dataTable>
@@ -65,29 +66,52 @@
 		</center>		
 			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
 
-			<p:dialog modal="true" appendTo="@(body)" header="Editar prioridade" widgetVar="dlg"
+			<p:dialog modal="true" appendTo="@(body)" header="Editar prioridade" widgetVar="dlgUpdate"
 				resizable="false">
-				<h:form id="frmUpdatee">
-				<h:panelGrid id="pgUpdate" columns="1" cellpadding="5">
-					<h:outputText value="#{paciente.model.cod_paciente}" />
-					<h:outputLabel value="Selecione a prioridade:" />
-					<p:selectOneMenu id="pri"
-						value="#{paciente.model.new_prioridade}"
-						style="width:250px">
-						<f:selectItem itemLabel="Selecione" itemValue="" />
-						<f:selectItem itemLabel="Baixa" itemValue="100" />
-						<f:selectItem itemLabel="Média" itemValue="200" />
-						<f:selectItem itemLabel="Alta" itemValue="300" />
-					</p:selectOneMenu>
+				<h:form id="frmUpdate">
+					<h:panelGrid id="pgUpdate" columns="1" cellpadding="5">
+						<h:outputText value="#{paciente.model.cod_paciente}" />
+						<h:outputLabel value="Selecione a prioridade:" />
+						<p:selectOneMenu id="prioridade"
+							value="#{paciente.model.new_prioridade}"
+							style="width:250px">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItem itemLabel="Baixa" itemValue="100" />
+							<f:selectItem itemLabel="Média" itemValue="200" />
+							<f:selectItem itemLabel="Alta" itemValue="300" />
+						</p:selectOneMenu>
+	
+						<f:facet name="footer">
+							<p:commandButton value="Editar"
+								action="#{paciente.editar}"
+								update="frmPacienteLista"
+								oncomplete="PF('dlgUpdate').hide();"
+							/>
+						</f:facet>
+					</h:panelGrid>
+				</h:form>
+			</p:dialog>
+			
+			<p:growl id="emergencia" sticky="true" showDetail="true" life="3000" />
 
-					<f:facet name="footer">
-						<p:commandButton value="Editar"
-							action="#{paciente.editar}"
-							update="frmPacienteLista"
-							oncomplete="PF('dlg').hide();"
-						/>
-					</f:facet>
-				</h:panelGrid>
+			<p:dialog modal="true" appendTo="@(body)" header="Emergencia" widgetVar="dlgEmergencia"
+				resizable="false">
+				<h:form id="frmEmergencia">
+					<h:panelGrid id="pgEmergencia" columns="1" cellpadding="5">
+						<h:outputLabel value="Deseja mover o paciente #{paciente.model.nome} para emergencia?" />
+	
+						<f:facet name="footer">
+							<p:commandButton value="Sim"
+								action="#{paciente.emergencia}"
+								update="frmPacienteLista"
+								oncomplete="PF('dlgEmergencia').hide();"
+							/>
+							<p:commandButton value="Não"
+								update="frmPacienteLista"
+								oncomplete="PF('dlgEmergencia').hide();"
+							/>
+						</f:facet>
+					</h:panelGrid>
 				</h:form>
 			</p:dialog>
 	</ui:define>
