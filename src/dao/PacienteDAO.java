@@ -175,11 +175,7 @@ public class PacienteDAO {
 		return false;
 	}
 
-	public static void atenderPaciente(Paciente_model model) {
-
-	}
-	
-	public boolean emergenciaPaciente(Paciente_model model) {
+	public boolean atenderPaciente(Paciente_model model) {
 		Statement stm;
 		ConexaoBD conexao = new ConexaoBD();
 		conexao.conexao();

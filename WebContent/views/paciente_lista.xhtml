@@ -64,11 +64,12 @@
 		<center>
 			<a class="btn btn-success btnSpace" href="/Integrador/views/paciente_cadastro.xhtml">Cadastrar novo Paciente</a>
 		</center>		
-			<p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+			
 
 			<p:dialog modal="true" appendTo="@(body)" header="Editar prioridade" widgetVar="dlgUpdate"
 				resizable="false">
 				<h:form id="frmUpdate">
+				<p:growl id="growl" sticky="true" showDetail="true" life="800" />
 					<h:panelGrid id="pgUpdate" columns="1" cellpadding="5">
 						<h:outputText value="#{paciente.model.cod_paciente}" />
 						<h:outputLabel value="Selecione a prioridade:" />
@@ -84,7 +85,7 @@
 						<f:facet name="footer">
 							<p:commandButton value="Editar"
 								action="#{paciente.editar}"
-								update="frmPacienteLista"
+								update=":frmPacienteLista:pacienteTable: growl"
 								oncomplete="PF('dlgUpdate').hide();"
 							/>
 						</f:facet>
@@ -92,18 +93,19 @@
 				</h:form>
 			</p:dialog>
 			
-			<p:growl id="emergencia" sticky="true" showDetail="true" life="3000" />
+			
 
 			<p:dialog modal="true" appendTo="@(body)" header="Emergencia" widgetVar="dlgEmergencia"
 				resizable="false">
 				<h:form id="frmEmergencia">
+				<p:growl id="emergencia" sticky="true" showDetail="true" life="800" />
 					<h:panelGrid id="pgEmergencia" columns="1" cellpadding="5">
 						<h:outputLabel value="Deseja mover o paciente #{paciente.model.nome} para emergencia?" />
 	
 						<f:facet name="footer">
 							<p:commandButton value="Sim"
 								action="#{paciente.emergencia}"
-								update="frmPacienteLista"
+								update=":frmPacienteLista:pacienteTable: emergencia"
 								oncomplete="PF('dlgEmergencia').hide();"
 							/>
 							<p:commandButton value="Não"

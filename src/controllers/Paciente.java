@@ -9,8 +9,10 @@ import java.util.Date;
 import java.util.Iterator;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -24,24 +26,24 @@ import models.Paciente_model;
 
 @ManagedBean
 @SessionScoped
-public class Paciente extends HttpServlet{
+public class Paciente extends HttpServlet {
 	private Paciente_model model = new Paciente_model();
 	private List<Paciente_model> lista = new Vector<>();
-	private PacienteDAO pac = new PacienteDAO();	
+	private PacienteDAO pac = new PacienteDAO();
 
-    @PostConstruct
-    public void init() {    	
-    	lista = pac.selectPaciente();
-        HeapSort ob = new HeapSort(); 
-        ob.sort(lista);    	
-    }
-    
 	
+
+	@PostConstruct
+	public void init() {
+		lista = pac.selectPaciente();
+		HeapSort ob = new HeapSort();
+		ob.sort(lista);
+	}
+
 	public void cadastrar() {
 		lista.add(model);
 		pac.inserir(model);
 		this.init();
-//		model = new Paciente_model();
 	}
 
 	public Paciente_model getModel() {
@@ -49,23 +51,38 @@ public class Paciente extends HttpServlet{
 	}
 
 	public void editar() {
-		pac.editarPaciente(model);		
-//		model = new Paciente_model();
+		FacesContext context = FacesContext.getCurrentInstance();
+		if (pac.editarPaciente(model)) {
+			System.out.println("SUCESSO");
+			context.addMessage(null, new FacesMessage("Sucesso", "Editado com sucesso"));
+		}else {
+			System.out.println("ERRO");
+			context.addMessage(null, new FacesMessage("Erro", "Escolha outra categoria"));
+		}
+			
 		this.init();
 	}
-	
+
 	public void atender() {
+		FacesContext context = FacesContext.getCurrentInstance();
 		Paciente_model primeiro = lista.get(0);
-		PacienteDAO.atenderPaciente(primeiro);
+		if (pac.atenderPaciente(primeiro))
+			context.addMessage(null, new FacesMessage("Sucesso", "Paciente " + primeiro.getNome() + " foi atendido"));
+		else
+			context.addMessage(null, new FacesMessage("Erro", "Não foi possível atender paciente"));
 		this.init();
 	}
-	
+
 	public void emergencia() {
+		FacesContext context = FacesContext.getCurrentInstance();
 		model.setNew_prioridade("400");
-		pac.editarPaciente(model);
+		if (pac.editarPaciente(model))
+			context.addMessage(null, new FacesMessage("Sucesso", "Paciente movido para emergencia"));
+		else
+			context.addMessage(null, new FacesMessage("Erro", "Não foi possível mover paciente para emergencia"));
 		this.init();
 	}
-	
+
 	public void setModel(Paciente_model model) {
 		this.model = model;
 	}
@@ -76,6 +93,6 @@ public class Paciente extends HttpServlet{
 
 	public void setlista(List<Paciente_model> lista) {
 		this.lista = lista;
-	}	
+	}
 
 }
