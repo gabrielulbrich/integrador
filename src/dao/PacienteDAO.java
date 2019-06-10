@@ -16,7 +16,7 @@ import models.Paciente_model;
 
 public class PacienteDAO {
 
-	String categoria = null;
+	int categoria;
 	int prioridade = 0;
 	ConexaoBD conexao = new ConexaoBD();
 
@@ -42,7 +42,7 @@ public class PacienteDAO {
 		conexao.conexao();
 		try {
 			PreparedStatement pst = conexao.con.prepareStatement(
-					"INSERT INTO paciente (nome, cpf, idade, sexo, endereco, telefone, datacadastro, prioridade, categoria) VALUES (?,?,?,?,?,?,TIMESTAMP(?, ? ),?, ?);");
+					"INSERT INTO paciente (nome, cpf, idade, sexo, endereco, telefone, datacadastro, prioridade, cod_categoria) VALUES (?,?,?,?,?,?,TIMESTAMP(?, ? ),?, ?);");
 			pst.setString(1, model.getNome());
 			pst.setString(2, model.getCpf());
 			pst.setString(3, model.getIdade());
@@ -52,7 +52,7 @@ public class PacienteDAO {
 			pst.setString(7, model.getDatacadastro());
 			pst.setString(8, model.getHoracadastro());
 			pst.setInt(9, prioridade);
-			pst.setString(10, categoria);
+			pst.setInt(10, categoria);
 			pst.execute();
 			conexao.desconecta();
 			return true;
@@ -64,10 +64,10 @@ public class PacienteDAO {
 		}
 	}
 
-	public int selectMinPrioridade(String categoria) {
+	public int selectMinPrioridade(int categoria) {
 		conexao.conexao();
 		try {
-			PreparedStatement pst = conexao.con.prepareStatement("SELECT MIN(prioridade) as prioridade FROM paciente where categoria='"+categoria+"';");
+			PreparedStatement pst = conexao.con.prepareStatement("SELECT MIN(prioridade) as prioridade FROM paciente where cod_categoria="+categoria+";");
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
 				if (rs.getObject("prioridade") != null) {
@@ -88,10 +88,10 @@ public class PacienteDAO {
 		}
 	}
 	
-	public int selectMaxPrioridade(String categoria) {
+	public int selectMaxPrioridade(int categoria) {
 		conexao.conexao();
 		try {
-			PreparedStatement pst = conexao.con.prepareStatement("SELECT MAX(prioridade) as prioridade FROM paciente where categoria='"+categoria+"';");
+			PreparedStatement pst = conexao.con.prepareStatement("SELECT MAX(prioridade) as prioridade FROM paciente where cod_categoria="+categoria+";");
 			ResultSet rs = pst.executeQuery();
 			if (rs.next()) {
 				if (rs.getObject("prioridade") != null) {
@@ -115,7 +115,7 @@ public class PacienteDAO {
 	public List<Paciente_model> selectPaciente() {
 		conexao.conexao();
 		try {
-			PreparedStatement pst = conexao.con.prepareStatement("SELECT * FROM paciente;");
+			PreparedStatement pst = conexao.con.prepareStatement("SELECT cod_paciente, nome, cpf, idade, sexo, endereco, telefone, datacadastro, categoria, prioridade, cod_categoria FROM paciente as p, categoria as c WHERE p.cod_categoria = c.cod_categoria;");
 			ResultSet rs = pst.executeQuery();
 			List<Paciente_model> models = new ArrayList<>();
 			while (rs.next()) {
@@ -128,7 +128,7 @@ public class PacienteDAO {
 				model.setEndereco(rs.getString("endereco"));
 				model.setTelefone(rs.getString("telefone"));
 				model.setDatacadastro(rs.getString("datacadastro"));
-//				model.setHoracadastro(rs.getString("horacadastro"));
+				model.setCod_categoria(rs.getInt("cod_categoria"));
 				model.setPrioridade(rs.getString("prioridade"));
 				model.setCategoria(rs.getString("categoria"));
 				models.add(model);
@@ -148,20 +148,19 @@ public class PacienteDAO {
 	public boolean editarPaciente(Paciente_model mode) {
 		int old_prioridade = Integer.parseInt(mode.getPrioridade());
 		int new_prioridade = Integer.parseInt(mode.getNew_prioridade());
-		String old_categoria = mode.getCategoria();
-		String new_categoria = getCategoria(Integer.parseInt(mode.getNew_prioridade()));
+		int old_categoria = mode.getCod_categoria();
+		int new_categoria = getCategoria(Integer.parseInt(mode.getNew_prioridade()));
 		new_prioridade = this.getNewprioridade(new_prioridade, old_prioridade, new_categoria, old_categoria);
 		
 		if (new_prioridade == 0)
-			return false;
-		
+			return false;		
 		
 		conexao.conexao();
 		try {
 			PreparedStatement pst = conexao.con.prepareStatement(
-					"UPDATE paciente SET prioridade = ?, categoria = ? where cod_paciente = ?;");
+					"UPDATE paciente SET prioridade = ?, cod_categoria = ? where cod_paciente = ?;");
 			pst.setInt(1, new_prioridade);
-			pst.setString(2, new_categoria);
+			pst.setInt(2, new_categoria);
 			pst.setInt(3, mode.getCod_paciente());
 			
 			pst.execute();
@@ -191,33 +190,30 @@ public class PacienteDAO {
 		return false;
 	}
 	
-	private String getCategoria(int prioridade) {
+	private int getCategoria(int prioridade) {
 		if (prioridade == 100) {
-			categoria = "b";
+			categoria = 1;//baixa
 		}else if(prioridade == 200) {
-			categoria = "m";
+			categoria = 2;//media
 		}else if(prioridade == 300) {
-			categoria = "a";
+			categoria = 3;//alta
 		}else if(prioridade == 400) {
-			categoria = "e";
+			categoria = 4;//emergencia
 		}else {
-			categoria = "0";
-		}		
+			categoria = 0;//nenhuma.
+		}
 		return categoria;
 	}
 	
-	private int getNewprioridade(int new_prioridade, int old_prioridade, String new_categoria, String old_categoria) {
-		if(new_categoria.equals(old_categoria)){
-			System.out.println("AQUI1");
+	private int getNewprioridade(int new_prioridade, int old_prioridade, int new_categoria, int old_categoria) {
+		if(new_categoria == old_categoria){
 			return prioridade = 0;			
 		}else if(new_prioridade > old_prioridade) {
-			System.out.println("AQUI2");
 			prioridade = this.selectMinPrioridade(new_categoria);
 			if (prioridade == 0)
 				prioridade = new_prioridade;
 			return prioridade;
 		}else if (new_prioridade < old_prioridade) {
-			System.out.println("AQUI3");
 			prioridade = this.selectMaxPrioridade(new_categoria);
 			if (prioridade == 0)
 				prioridade = new_prioridade;
